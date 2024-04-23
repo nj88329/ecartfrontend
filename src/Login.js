@@ -64,7 +64,7 @@ import {
     };
          const handleLogin = async (event) =>{
           try {     
-           if(token)   localStorage.setItem('token', '');
+           if(token)   localStorage.setItem('token','');
           const response = await fetch("http://localhost:3000/api/users/login", {
             method: "POST",
             headers: {
