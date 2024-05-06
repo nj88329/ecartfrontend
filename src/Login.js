@@ -46,7 +46,7 @@ import {
 
     if (token) {
         const api = axios.create({
-            baseURL: 'http://localhost:3000/api/users',
+            baseURL: 'http://localhost:10000/api/users',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
