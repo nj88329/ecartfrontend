@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "ecart",
   "version": "0.1.0",
   "private": true,
@@ -63,33 +62,5 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "tailwindcss": "^3.4.1"
-=======
-  "name": "mycontacts-backendapi",
-  "version": "1.0.0",
-  "description": "\"Project for node express.js\"",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  },
-  "author": "Nitin",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^1.6.8",
-    "bcrypt": "^5.1.1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.3",
-    "multer": "^1.4.5-lts.1",
-    "nodemon": "^3.0.2",
-    "sha256": "^0.2.0",
-    "stripe": "^15.1.0",
-    "uniqid": "^5.4.0",
-    "uuid": "^9.0.1"
->>>>>>> origin/main
   }
 }
