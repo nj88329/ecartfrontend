@@ -24,7 +24,7 @@ const Navbars = () => {
 
     const EmptyCart = async()=>{
       try{
-        let response = await axios.delete("http://localhost:3000/api/products/",  {
+        let response = await axios.delete("http://localhost:10000/api/products/",  {
           headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${localStorage.getItem('token')}`

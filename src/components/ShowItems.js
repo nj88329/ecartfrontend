@@ -101,7 +101,7 @@ const ShowItems = (product) => {
              console.log('prodc', productData);
           try {
             // Make POST request using Axios
-            const response = await axios.post("http://localhost:3000/api/products/", productData, {
+            const response = await axios.post("http://localhost:10000/api/products/", productData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('token')}`

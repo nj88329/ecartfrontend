@@ -1,7 +1,7 @@
 import React, { useState , useEffect} from "react";
 import { useDispatch } from 'react-redux';
 import { loginLogout} from './features/cartSlice';
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 import axios from 'axios';
 import {
@@ -33,8 +33,17 @@ import {
 
    const [show , setShow ] = useState(0);
   
+   useEffect(() => {
+    const fetchData = async (api) => {
+        try {
+            const response = await api.get('/current');
+            console.log('response.data', response.data);    
+            dispatch(loginLogout());
+        } catch (error) {
+            console.error('Failed to fetch data', error);
+        }
+    };
 
-  useEffect(() => {
     if (token) {
         const api = axios.create({
             baseURL: 'http://localhost:3000/api/users',
@@ -45,18 +54,46 @@ import {
         // Use the 'api' instance for subsequent requests
         fetchData(api);
     }
-}, [token]);
+}, [token, dispatch]);
+
+
+//   useEffect(() => {
+    
+//     const fetchData = async (api) => {
+//       try {
+//           const response = await api.get('/current');
+//           console.log('response.data', response.data);    
+//           dispatch(loginLogout()) ;
+          
+//       } catch (error) {
+//           console.error('Failed to fetch data', error);
+//       }
+//   }
+
+
+//     if (token) {
+//         const api = axios.create({
+//             baseURL: 'http://localhost:3000/api/users',
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         });
+//         // Use the 'api' instance for subsequent requests
+        
+//         fetchData()
+//     }
+// }, [token , dispatch]);
          
-         const fetchData = async (api) => {
-          try {
-              const response = await api.get('/current');
-              console.log('response.data', response.data);    
-              dispatch(loginLogout()) ;
+      //    const fetchData = async (api) => {
+      //     try {
+      //         const response = await api.get('/current');
+      //         console.log('response.data', response.data);    
+      //         dispatch(loginLogout()) ;
               
-          } catch (error) {
-              console.error('Failed to fetch data', error);
-          }
-      }
+      //     } catch (error) {
+      //         console.error('Failed to fetch data', error);
+      //     }
+      // }
 
     const handleChange = (event) => {
       const { name, value } = event.target;
@@ -65,7 +102,7 @@ import {
          const handleLogin = async (event) =>{
           try {     
            if(token)   localStorage.setItem('token','');
-          const response = await fetch("http://localhost:3000/api/users/login", {
+          const response = await fetch("http://localhost:10000/api/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -94,7 +131,7 @@ import {
 
     const handleSubmit = async (event) => {
       try {
-        const response = await fetch("http://localhost:3000/api/users/register", {
+        const response = await fetch("http://localhost:10000/api/users/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
