@@ -104,11 +104,13 @@ const Cart = () => {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${localStorage.getItem('token')}`
           }
+        
       });
-       await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
+      let resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
           
-      setCartData(response.data);
+      setCartData(resp.data);
       console.log('deleted')
+     
      }
        catch(err){
            console.log('err', err);
