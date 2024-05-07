@@ -17,7 +17,7 @@ import axios from 'axios';
 const Navbars = () => {
 
 
-  let REACT_APP_API_URL='https://your-render-app.onrender.com'
+  let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
   // const history = useHistory();
   const cartLink = useSelector((state) => state.cart.cartLink);
   const dispatch = useDispatch();

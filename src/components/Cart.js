@@ -9,7 +9,7 @@ import StripeCheckout from 'react-stripe-checkout';
 const Cart = () => {
  
   // const items = useSelector((state) => state.cart.item);
-  let REACT_APP_API_URL='https://your-render-app.onrender.com'
+  let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
   
   const [buyProd , setBuyProd ] = useState([]) 
   const cartLink = useSelector((state) => state.cart.cartLink);
