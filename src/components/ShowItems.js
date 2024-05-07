@@ -9,7 +9,9 @@ import Messages from './Message';
 
 const ShowItems = (product) => {
 
-    console.log('show' , product.product);
+  let REACT_APP_API_URL='https://your-render-app.onrender.com'
+    
+     console.log('show' , product.product);
     const userid = localStorage.getItem('id');
      const genAI = new GoogleGenerativeAI('AIzaSyCkimmrTvjhi16EiNYUsUpizNHWR9opNFc');
     let [inputMessage, setInputMessage] = useState('');
@@ -101,7 +103,7 @@ const ShowItems = (product) => {
              console.log('prodc', productData);
           try {
             // Make POST request using Axios
-            const response = await axios.post("http://localhost:10000/api/products/", productData, {
+            const response = await axios.post(`${REACT_APP_API_URL}/`, productData, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${localStorage.getItem('token')}`

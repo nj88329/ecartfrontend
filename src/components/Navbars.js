@@ -16,6 +16,8 @@ import axios from 'axios';
 
 const Navbars = () => {
 
+
+  let REACT_APP_API_URL='https://your-render-app.onrender.com'
   // const history = useHistory();
   const cartLink = useSelector((state) => state.cart.cartLink);
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const Navbars = () => {
 
     const EmptyCart = async()=>{
       try{
-        let response = await axios.delete("http://localhost:10000/api/products/",  {
+        let response = await axios.delete(`${REACT_APP_API_URL}/api/products/`,  {
           headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${localStorage.getItem('token')}`

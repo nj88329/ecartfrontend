@@ -9,6 +9,7 @@ import StripeCheckout from 'react-stripe-checkout';
 const Cart = () => {
  
   // const items = useSelector((state) => state.cart.item);
+  let REACT_APP_API_URL='https://your-render-app.onrender.com'
   
   const [buyProd , setBuyProd ] = useState([]) 
   const cartLink = useSelector((state) => state.cart.cartLink);
@@ -38,7 +39,7 @@ const Cart = () => {
      console.log('dafa', dataToBuy)
      try {
       console.log('Fetching cart items...');
-      const response = await axios.post('http://localhost:10000/api/products/payment',  dataToBuy , {headers});
+      const response = await axios.post(`${REACT_APP_API_URL}api/products/payment`,  dataToBuy , {headers});
 
        window.location.href = response.data;
 
@@ -84,7 +85,7 @@ const Cart = () => {
   const fetchCartItems = async() =>{
     try {
       console.log('Fetching cart items...');
-      const response = await axios.get('http://localhost:10000/api/products/', { headers });
+      const response = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
 
       setCartData(response.data);
 
@@ -98,7 +99,7 @@ const Cart = () => {
      
     const deleteProductfromCart = async(item)=>{
       try{
-        let response = await axios.delete(`http://localhost:10000/api/products/${item._id}`,  {
+        let response = await axios.delete(`${REACT_APP_API_URL}/api/products/${item._id}`,  {
           headers: {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${localStorage.getItem('token')}`

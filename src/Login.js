@@ -20,6 +20,8 @@ import {
   
   export const Login = () => {
 
+    let REACT_APP_API_URL='https://your-render-app.onrender.com'
+
     const [token , setToken ] = useState('');
     const dispatch = useDispatch();
 
@@ -46,7 +48,7 @@ import {
 
     if (token) {
         const api = axios.create({
-            baseURL: 'http://localhost:10000/api/users',
+            baseURL: `${REACT_APP_API_URL}/api/users`,
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -102,7 +104,7 @@ import {
          const handleLogin = async (event) =>{
           try {     
            if(token)   localStorage.setItem('token','');
-          const response = await fetch("http://localhost:10000/api/users/login", {
+          const response = await fetch(`${REACT_APP_API_URL}/api/users/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -131,7 +133,7 @@ import {
 
     const handleSubmit = async (event) => {
       try {
-        const response = await fetch("http://localhost:10000/api/users/register", {
+        const response = await fetch(`${REACT_APP_API_URL}/api/users/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
