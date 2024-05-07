@@ -109,7 +109,7 @@ const Cart = () => {
       let resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
           
       setCartData(resp.data);
-      console.log('deleted')
+      console.log('deleted', resp.data)
      
      }
        catch(err){
