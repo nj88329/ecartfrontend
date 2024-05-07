@@ -105,7 +105,9 @@ const Cart = () => {
               "Authorization": `Bearer ${localStorage.getItem('token')}`
           }
       });
-      fetchCartItems();
+       await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
+
+      setCartData(response.data);
      }
        catch(err){
            console.log('err', err);
