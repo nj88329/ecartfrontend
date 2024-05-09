@@ -69,7 +69,8 @@ const Navbars = () => {
       
       {
         (cartLink)?
-       <h5>Empty Cart <Button style={{backgroundColor:"red"}}><FaRegHeart style={{color:"black"}} onClick={()=>{EmptyCart(); dispatch(cartScreen());}}/></Button></h5> :
+       <h5>Empty Cart <Button style={{backgroundColor:"red"}}>
+        <FaRegHeart style={{color:"black"}} onClick={()=>{EmptyCart(); dispatch(cartScreen());}}/></Button></h5> :
        <></>
 
       }

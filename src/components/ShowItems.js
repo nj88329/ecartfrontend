@@ -54,8 +54,8 @@ const ShowItems = (product) => {
       console.log('reposne', response.text())
    
       const history = await chat.getHistory();
-      console.log('sis', history);
-      console.log('histroy', chat._history);
+      // // console.log('sis', history);
+      // console.log('histroy', chat._history);
       if( chatApp.length === 0 )
       {
        setChatApp(JSON.parse(JSON.stringify(chat._history)));

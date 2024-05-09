@@ -1,8 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState , useEffect, useRef } from "react";
 import { Avatar, Flex, Text } from "@chakra-ui/react";
+
+
+
+const useDebounce = (value , delay)=>{
+  const [debouncedMessageValue , setDebouncedMessageValue] = useState(value);
+
+useEffect(()=>{  
+    const handleFunc = setTimeout(()=>{
+      setDebouncedMessageValue(value);
+    }, delay)
+  
+  return ()=>{
+    clearTimeout(handleFunc)
+  };
+},[value , delay])
+  return debouncedMessageValue;
+}
 
 const Messages = ({ messages }) => {
   console.log('mmessga', messages)
+  const debouncedMessages = useDebounce(messages , 3000);
 
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef();
@@ -16,7 +34,6 @@ const Messages = ({ messages }) => {
       mess = JSON.parse(JSON.stringify(messages));
     }  
      
-    
 
   return (
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="4" backgroundColor='lightgreen'>

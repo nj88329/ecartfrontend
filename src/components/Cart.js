@@ -39,7 +39,7 @@ const Cart = () => {
      console.log('dafa', dataToBuy)
      try {
       console.log('Fetching cart items...');
-      const response = await axios.post(`${REACT_APP_API_URL}api/products/payment`,  dataToBuy , {headers});
+      const response = await axios.post(`${REACT_APP_API_URL}/api/products/payment`,  dataToBuy , {headers});
 
        window.location.href = response.data;
 
