@@ -37,7 +37,7 @@ const Messages = ({ messages }) => {
 
   return (
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="4" backgroundColor='lightgreen'>
-      {messages?.map((item, index) => {
+      {debouncedMessages?.map((item, index) => {
         if(index === 0 ) return <></>; 
 
         else if (item.role === "user") {
