@@ -31,7 +31,7 @@ const Messages = ({ messages }) => {
   let mess = [{}];
     if( debouncedMessages && mess.length === 0 ) 
     {
-      mess = JSON.parse(JSON.stringify(messages));
+      mess = JSON.parse(JSON.stringify(debouncedMessages));
     }  
      
 
