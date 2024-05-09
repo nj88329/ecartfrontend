@@ -19,9 +19,10 @@ useEffect(()=>{
 }
 
 const Messages = ({ messages }) => {
-  console.log('mmessga', messages)
+  
   const debouncedMessages = useDebounce(messages , 3000);
-
+  console.log('mmessga', debouncedMessages)
+  
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef();
     useEffect(() => elementRef.current.scrollIntoView());
