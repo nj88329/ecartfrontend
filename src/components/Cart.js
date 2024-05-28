@@ -24,6 +24,56 @@ const Cart = () => {
   };
 
 
+
+
+     const increaseQuantity = async(it)=>{
+           console.log('itemqun' , it);
+
+          let updatedProduct = {
+            ...it,
+            price : (it.price/(it.quantity))*(it.quantity+1),
+            quantity: it.quantity + 1,
+          }
+           try {
+            // Make POST request using Axios
+            const response = await axios.put(`http://localhost:10000/api/products/${it._id}`, updatedProduct, {headers});
+
+            const resp = await axios.get(`http://localhost:10000/api/products/`, { headers });
+            setCartData(resp.data);
+            console.log('res', response.data.quantity);
+          }catch(err){
+                   console.log(err)
+            }
+          
+     }
+
+
+     const decreaseQuantity = async(it)=>{
+      console.log('itemqun' , it);
+       
+      
+
+      let updatedProduct = {
+        ...it,
+        price : (it.price/(it.quantity))*(it.quantity-1),
+        quantity: it.quantity - 1,
+      }
+
+     if(updatedProduct.quantity === 0) return;
+      try {
+       // Make POST request using Axios
+       const response = await axios.put(`http://localhost:10000/api/products/${it._id}`, updatedProduct, {headers});
+
+       const resp = await axios.get(`http://localhost:10000/api/products/`, { headers });
+       setCartData(resp.data);
+       console.log('res', response.data.quantity);
+     }catch(err){
+              console.log(err)
+       }
+     
+}
+
+
   const buyProduct =async(it)=>{
         
     // setBuyProd((prev)=>{
@@ -127,10 +177,11 @@ const Cart = () => {
     <div>
     <Card style={{ width: '30rem' , marginLeft:'50%' }} key={id}>
       <Card.Img variant="top" src = {`${it.image}`}  />
-      <Card.Body>
-        <Card.Title style={{backgroundColor:'lightgreen'}}>{`${it.name}`}</Card.Title>
-        <Card.Title style={{backgroundColor:'yellow'}}>Price : ${`${it.price}`}</Card.Title>
-       
+      <Card.Body style={{backgroundColor:'yellow'}}>
+        <Card.Title style={{backgroundColor:'', color:'red'}}>{`${it.name}`}</Card.Title>
+        <Card.Title style={{backgroundColor:'',color:'red'}}>Price : ${`${it.price}`}</Card.Title>
+        <Card.Title style={{backgroundColor:'',color:'red'}}> Qty:  <Button style={{height:'40px', width: '40px'}} onClick={(e)=>increaseQuantity(it)}>+</Button>{`${it.quantity}`}
+        <Button style={{height:'40px', width: '40px' , color:'white'}} onClick={(e)=>decreaseQuantity(it)}>-</Button></Card.Title>
        { 
         (!buyProd[it])?<>
        <Button variant="primary" style={{ backgroundColor:'green'}} onClick={()=>buyProduct(it)}>Buy Now</Button></>

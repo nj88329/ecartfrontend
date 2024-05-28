@@ -1,11 +1,13 @@
-import React,{useState} from 'react';
+import React,{useState , useEffect } from 'react';
 import { Card, Image , Stack , Heading ,Header ,Footer, Divider , Button , ButtonGroup, CardBody, CardFooter } from '@chakra-ui/react';
 import {  useDispatch } from 'react-redux';
 import { increment } from '../features/cartSlice';
 import axios from 'axios';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Flex, Input } from "@chakra-ui/react";
-import Messages from './Message';
+
+import Messages from './Message'; // Ensure Messages component is imported correctly
+import useDebounce from './useDebounce'; // Adjust the import path as necessary
 
 const ShowItems = (product) => {
 
@@ -19,6 +21,31 @@ const ShowItems = (product) => {
     let [ chatApp  , setChatApp ] = useState([{}]);
     var chat =[{}]
       const [clicked , setClicked ]= useState(false) ;
+
+      const debouncedSearchTerm = useDebounce(inputMessage, 2000);
+
+
+      // useEffect(()=>{  
+        //   const handleFunc = setTimeout(()=>{
+        //     setInputMessage(value);
+        //   }, delay)
+        
+        // return ()=>{
+        //   clearTimeout(handleFunc)
+        // };
+        // if (debouncedSearchTerm) {
+        //   // Perform the API call when the debounced search term changes
+        //   genai(debouncedSearchTerm);
+        // }else{
+        //   console.log('hello',debouncedSearchTerm )
+        // }
+      // },[debouncedSearchTerm])
+      // setInputMessage(value);
+        
+
+
+
+
 
     async function genai(msg) {
       setClicked(false);
@@ -43,13 +70,16 @@ const ShowItems = (product) => {
         },
        });
 
+
+      
       // const arr = chat._history
       // chatArr=[...chatArr , {role:}];
       // chat._history = [...chat._history , {role : "user" , parts :[{text:msg}]}]
      
       
       const result = await chat.sendMessageStream(msg);
-
+      // const debouncedMessages = useDebounce(result , 2000);
+      // console.log('mmessga', debouncedMessages)
       const response =await result.response;
       console.log('reposne', response.text())
    
@@ -212,3 +242,121 @@ const ShowItems = (product) => {
 }
 
 export default ShowItems
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { Card, Image, Stack, Heading, Divider, Button, ButtonGroup, CardBody, CardFooter, Flex, Input } from '@chakra-ui/react';
+// import { useDispatch } from 'react-redux';
+// import { increment } from '../features/cartSlice';
+// import axios from 'axios';
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// import Messages from './Message'; // Ensure Messages component is imported correctly
+// import useDebounce from './useDebounce'; // Adjust the import path as necessary
+
+// const ShowItems = (product) => {
+//   let REACT_APP_API_URL = 'https://nitinecartapp.onrender.com';
+  
+//   console.log('show', product.product);
+//   const userid = localStorage.getItem('id');
+//   const genAI = new GoogleGenerativeAI('YOUR_API_KEY_HERE'); // Use your actual API key
+
+//   const [inputMessage, setInputMessage] = useState('');
+//   const [chatApp, setChatApp] = useState([{}]);
+//   const [clicked, setClicked] = useState(false);
+
+//   const debouncedInputMessage = useDebounce(inputMessage, 2000);
+
+//   async function genai(msg) {
+//     setClicked(false);
+//     setInputMessage('');
+
+//     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+//     const chat = model.startChat({
+//       history: [
+//         {
+//           role: "user",
+//           parts: [{ text: "Hello, I have 2 dogs in my house." }],
+//         },
+//         {
+//           role: "model",
+//           parts: [{ text: "Great to meet you. What would you like to know?" }],
+//         },
+//       ],
+//       generationConfig: {
+//         maxOutputTokens: 100,
+//       },
+//     });
+
+//     const result = await chat.sendMessageStream(msg);
+//     console.log('debouncedInputMessage', debouncedInputMessage);
+//     const response = await result.response;
+//     console.log('response', await response.text());
+
+//     const history = await chat.getHistory();
+//     if (chatApp.length === 0) {
+//       setChatApp(JSON.parse(JSON.stringify(history)));
+//     } else {
+//       history.forEach((item, ind) => {
+//         if (ind === 2 || ind === 3) {
+//           setChatApp((prevChatApp) => [...prevChatApp, item]);
+//         }
+//       });
+//     }
+
+//     console.log('chatstate', chatApp);
+//     setClicked(true);
+//   }
+
+//   const dispatch = useDispatch();
+
+//   const addProduct = async (item, user_id) => {
+//     console.log('itemsimages', item);
+//     const { name, price, allArticleBaseImages, galleryImages } = item; // Destructure item to get name and price
+//     const productData = {
+//       name,
+//       price: price.value, // Assuming price.value contains the price
+//       quantity: 1,
+//       image: allArticleBaseImages[0],
+//       galleryImages,
+//       user_id
+//     };
+
+//     console.log('prodc', productData);
+//     try {
+//       // Make POST request using Axios
+//       const response = await axios.post(`${REACT_APP_API_URL}/api/products`, productData, {
+//         headers: {
+//           "Content-Type": "application/json",
+//           "Authorization": `Bearer ${localStorage.getItem('token')}`
+//         }
+//       });
+
+//       // Check if request was successful
+//       if (response.status === 201) {
+//         const outcome = response.data;
+//         console.log('out', outcome);
+//         dispatch(increment(item));
+//       } else {
+//         throw new Error("Failed to create product");
+//       }
+//     } catch (error) {
+//       // Handle error
+//       console.error("There was an error with the request:", error);
+//     }
+//   }
+
+//   return (
+//     <div>
+//       {/* Other UI components */}
+//       <Messages messages={chatApp} />
+//       <Input
+//         value={inputMessage}
+//         onChange={(e) => setInputMessage(e.target.value)}
+//       />
+//       <Button onClick={() => genai(inputMessage)}>Send</Button>
+//     </div>
+//   );
+// };
+
+// export default ShowItems;

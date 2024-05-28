@@ -20,7 +20,7 @@ useEffect(()=>{
 
 const Messages = ({ messages }) => {
   
-  const debouncedMessages = useDebounce(messages , 3000);
+  const debouncedMessages = useDebounce(messages , 2000);
   console.log('mmessga', debouncedMessages)
   
   const AlwaysScrollToBottom = () => {
