@@ -36,9 +36,9 @@ const Cart = () => {
           }
            try {
             // Make POST request using Axios
-            const response = await axios.put(`http://localhost:10000/api/products/${it._id}`, updatedProduct, {headers});
+            const response = await axios.put(`${REACT_APP_API_URL}/api/products/${it._id}`, updatedProduct, {headers});
 
-            const resp = await axios.get(`http://localhost:10000/api/products/`, { headers });
+            const resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
             setCartData(resp.data);
             console.log('res', response.data.quantity);
           }catch(err){
@@ -62,9 +62,9 @@ const Cart = () => {
      if(updatedProduct.quantity === 0) return;
       try {
        // Make POST request using Axios
-       const response = await axios.put(`http://localhost:10000/api/products/${it._id}`, updatedProduct, {headers});
+       const response = await axios.put(`${REACT_APP_API_URL}/api/products/${it._id}`, updatedProduct, {headers});
 
-       const resp = await axios.get(`http://localhost:10000/api/products/`, { headers });
+       const resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
        setCartData(resp.data);
        console.log('res', response.data.quantity);
      }catch(err){
