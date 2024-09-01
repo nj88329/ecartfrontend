@@ -11,8 +11,8 @@ import useDebounce from './useDebounce'; // Adjust the import path as necessary
 
 const ShowItems = (product) => {
 
-  // let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
-  let REACT_APP_API_URL='http://localhost:10000'  
+   let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
+  // let REACT_APP_API_URL='http://localhost:10000'  
     
      console.log('show' , product.product);
     const userid = localStorage.getItem('id');

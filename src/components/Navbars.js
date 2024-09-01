@@ -37,8 +37,8 @@ const Navbars = () => {
 
 
 
-  // let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
-  let REACT_APP_API_URL='http://localhost:10000'  
+   let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
+  // let REACT_APP_API_URL='http://localhost:10000'  
   // const history = useHistory();
   const cartLink = useSelector((state) => state.cart.cartLink);
   const dispatch = useDispatch();
