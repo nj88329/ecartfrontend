@@ -1,3 +1,4 @@
+import { useEffect , useState } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -17,13 +18,33 @@ import axios from 'axios';
 const Navbars = () => {
 
 
-  let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
+  // const [ cartVal , setCartVal ] = useState(0);
+
+    // console.log('cartfrom', cartData);
+
+  //  useEffect = (()=>{
+  //    if( cartData )
+  //      cartValue()    
+  //  },[cartData])
+ 
+
+    // const cartValue = ()=>{
+    //    cartData.map((item , index)=>{
+    //       //  cartVal  +=   item.price * item.quantity
+    //    })
+    // }
+
+
+
+
+  // let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
+  let REACT_APP_API_URL='http://localhost:10000'  
   // const history = useHistory();
   const cartLink = useSelector((state) => state.cart.cartLink);
   const dispatch = useDispatch();
   
 
-
+        
     const EmptyCart = async()=>{
       try{
         let response = await axios.delete(`${REACT_APP_API_URL}/api/products/`,  {

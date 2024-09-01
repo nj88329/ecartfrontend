@@ -1,21 +1,25 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import GalleryImages from './GalleryImages';
 import { Card, Button } from 'react-bootstrap';
 import  axios  from 'axios';
 import  { useState , useEffect } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
+import Navbars from './Navbars';
 
 const Cart = () => {
  
   // const items = useSelector((state) => state.cart.item);
-  let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
+  // let REACT_APP_API_URL='https://nitinecartapp.onrender.com'
+
+  let REACT_APP_API_URL='http://localhost:10000'  
   
   const [buyProd , setBuyProd ] = useState([]) 
   const cartLink = useSelector((state) => state.cart.cartLink);
   const [clicked , setClicked] = useState([]);
   // let [count, setCount] = useState(0); 
   let [prevClickedItem , setPrevClickedItem ] = useState(-1);
+  let [ cartData , setCartData ] = useState([]);
   // const dispatch = useDispatch();
    
   const headers = {
@@ -27,7 +31,6 @@ const Cart = () => {
 
 
      const increaseQuantity = async(it)=>{
-           console.log('itemqun' , it);
 
           let updatedProduct = {
             ...it,
@@ -44,14 +47,11 @@ const Cart = () => {
           }catch(err){
                    console.log(err)
             }
-          
      }
 
 
      const decreaseQuantity = async(it)=>{
       console.log('itemqun' , it);
-       
-      
 
       let updatedProduct = {
         ...it,
@@ -66,7 +66,7 @@ const Cart = () => {
 
        const resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
        setCartData(resp.data);
-       console.log('res', response.data.quantity);
+      
      }catch(err){
               console.log(err)
        }
@@ -86,7 +86,7 @@ const Cart = () => {
        amount : it.price ,
        userid: it._id
      }
-     console.log('dafa', dataToBuy)
+     
      try {
       console.log('Fetching cart items...');
       const response = await axios.post(`${REACT_APP_API_URL}/api/products/payment`,  dataToBuy , {headers});
@@ -116,8 +116,7 @@ const Cart = () => {
     });
   }
 
-    let [ cartData , setCartData ] = useState([]);
-    console.log('cartdata' , cartData);
+    
   
            
   //     const [ show , setShow ] = useState(false);
@@ -136,9 +135,9 @@ const Cart = () => {
     try {
       console.log('Fetching cart items...');
       const response = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
-
+      console.log('cartdata', response.data)
       setCartData(response.data);
-
+       
       // Handle cart items data here
     } catch (error) {
       console.error('Error fetching cart items:', error);
@@ -170,6 +169,7 @@ const Cart = () => {
   return (
   <div>
   {
+  
     cartData?.map((it , id)=>{
      
       return(
@@ -207,7 +207,9 @@ const Cart = () => {
     )
     })
   }
-  </div>
+  {/* <div style={{visibility:'hidden' }}> <Navbars  cartData={cartData} /></div> */}
+  </div> 
+  
   )
 }
 

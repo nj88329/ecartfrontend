@@ -33,8 +33,13 @@ export const cartSlice = createSlice({
     },
     loginLogout : (state , action) => {
       state.cartLink = false;
-        if(action.payload === false) localStorage.setItem('token' , "");
-       state.loginScreen = (!state.loginScreen)
+    if(action.payload === false)
+    {
+      localStorage.setItem('token' , "");
+      console.log('loggedoutslice');
+    }
+    console.log('loggedInslice');
+         state.loginScreen = (!state.loginScreen)
     }
   },
 })

@@ -17,11 +17,15 @@ import {
     Stack,
     Text
   } from '@chakra-ui/react'
-  
-  export const Login = () => {
 
-    let REACT_APP_API_URL='https://nitinecartapp.onrender.com'  
-      
+
+  function Login(){
+
+    // function Login(){
+
+    // let REACT_APP_API_URL='https://nitinecartapp.onrender.com'  
+
+      let REACT_APP_API_URL='http://localhost:10000'  
     const [token , setToken ] = useState('');
     const dispatch = useDispatch();
 
@@ -73,6 +77,8 @@ import {
 //   }
 
 
+
+
 //     if (token) {
 //         const api = axios.create({
 //             baseURL: 'http://localhost:3000/api/users',
@@ -101,8 +107,11 @@ import {
       const { name, value } = event.target;
       setFormData({ ...formData, [name]: value });
     };
+
+
          const handleLogin = async (event) =>{
           try {     
+            console.log('reachedlogin')
            if(token)   localStorage.setItem('token','');
           const response = await fetch(`${REACT_APP_API_URL}/api/users/login`, {
             method: "POST",
@@ -111,18 +120,19 @@ import {
             },
             body: JSON.stringify(formData)
           });
-    
+          console.log('reachedlogout')
              const data = await response.json();
-              //  console.log('data', data )
+                console.log('data', data )
                  
                if(!response.ok) alert(data.message);
 
           // Handle successful response
-
+          
           localStorage.setItem('id', data.user._id.toString() )
           localStorage.setItem('token', data.accessToken);
-           setToken(localStorage.getItem('token'));
-          //  console.log('newtoke', data.accessToken)
+          
+           setToken(localStorage.getItem('token'))
+          // console.log('newtoke', data.accessToken)
           //  fetchData();
         } catch (error) {
           // Handle error
@@ -140,7 +150,7 @@ import {
           },
           body: JSON.stringify(formData)
         });
-  
+            console.log('signedin bitton')
         if (!response.ok) {
           if( response.statusText === "Bad Request")
           {
@@ -210,9 +220,9 @@ import {
               <HStack style = {{display: "flex"}}>
             { 
             (show === 1)?<>
-            <Button onClick={handleSubmit}>Sign Up</Button>
+            <Button onClick={handleSubmit}>Sign Up</Button> 
             </> : 
-              <Button onClick={ ()=>{ handleLogin(true)  }} >LOGIN</Button>            
+               <Button onClick={ ()=>{ handleLogin(true)  }} >LOGIN</Button>               
           }
               </HStack>
             </Stack>
@@ -225,3 +235,6 @@ import {
         </Stack>
     </Container>)
   }
+
+
+  export default Login
