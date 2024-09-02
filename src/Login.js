@@ -35,6 +35,8 @@ import {
       password: "",
     });
 
+    const [isPasswordValid, setIsPasswordValid] = useState(true);
+    const [isUsernameValid, setIsUsernameValid] = useState(true);
     // const { user , loginWithRedirect } = useAuth0();
 
    const [show , setShow ] = useState(0);
@@ -104,8 +106,23 @@ import {
       // }
 
     const handleChange = (event) => {
-      const { name, value } = event.target;
-      setFormData({ ...formData, [name]: value });
+      let { name, value } = event.target;
+      
+
+      // Check password validity if the password field is being updated
+    if (name === "password") {
+      setIsPasswordValid(value.length >= 8);
+    }
+
+    else if( name === "username"){
+      setIsUsernameValid(value.length >= 5);
+    }
+    else if ( name === "email"){
+      // if (!value.endsWith('@xyz.com')) {
+      //   value += '@xyz.com';
+      // }
+    }
+    setFormData({ ...formData, [name]: value });
     };
 
 
@@ -151,22 +168,20 @@ import {
           body: JSON.stringify(formData)
         });
             console.log('signedin bitton')
+          
         if (!response.ok) {
+          // console.log('badresob',response.statusText )
           if( response.statusText === "Bad Request")
           {
             alert("Username/email is already taken.");
            throw new Error("Validation failed");
           }
-          else 
-          {
-            alert('Please enter the mandatory fields')
-           throw new Error(response.statusText);
-          }
         } 
+        console.log("Request successful", formData);
         // Handle successful response
         handleLogin()
         
-        console.log("Request successful", formData);
+      
       } catch (error) {
         // Handle error
         console.error("There was an error with the request:", error);
@@ -202,17 +217,30 @@ import {
             { ( show === 1)?
               <FormControl >      
                 <FormLabel htmlFor="email" >Username</FormLabel>
-                <Input id="email" type="username" name ="username" onChange = {handleChange} value = {formData.username}/>
+                <Input id="username" type="text" name ="username" onChange = {handleChange} value = {formData.username}
+                   borderColor={isUsernameValid ? 'gray.200' : 'red.500'} />
+                    {!isUsernameValid && (
+                    <Text color="red.500" fontSize="sm">
+                     Username must be at least 5 characters long.
+                    </Text>
+            )}
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input id="email"    name="email" type="email" onChange = {handleChange} value = {formData.email}/>
                 <FormLabel htmlFor="email">Password</FormLabel>
-                <Input id="email"    name="password" type="password" onChange = {handleChange} value={formData.password}/>
+                <Input id="password"    name="password" type="password" onChange = {handleChange} value={formData.password}
+                 borderColor={isPasswordValid ? 'gray.200' : 'red.500'} // Conditional border color
+                 />
+                  {!isPasswordValid && (
+                    <Text color="red.500" fontSize="sm">
+                      Password must be at least 8 characters long.
+                    </Text>
+            )}
               </FormControl>
               : <FormControl >      
               <FormLabel htmlFor="email">Email</FormLabel>
               <Input id="email"    name="email" type="email" onChange = {handleChange} value = {formData.email}/>
               <FormLabel htmlFor="email">Password</FormLabel>
-              <Input id="email" name="password" type="password" onChange = {handleChange} value={formData.password}/>
+              <Input id="password" name="password" type="password" onChange = {handleChange} value={formData.password}/>
             </FormControl>
             }
             </Stack>
@@ -220,7 +248,7 @@ import {
               <HStack style = {{display: "flex"}}>
             { 
             (show === 1)?<>
-            <Button onClick={handleSubmit}>Sign Up</Button> 
+            <Button onClick={handleSubmit} isDisabled={!isPasswordValid || !isUsernameValid}>Sign Up</Button> 
             </> : 
                <Button onClick={ ()=>{ handleLogin(true)  }} >LOGIN</Button>               
           }

@@ -38,7 +38,9 @@ export const cartSlice = createSlice({
       localStorage.setItem('token' , "");
       console.log('loggedoutslice');
     }
-    console.log('loggedInslice');
+    else{
+       console.log('loggedInslice');
+    }
          state.loginScreen = (!state.loginScreen)
     }
   },
