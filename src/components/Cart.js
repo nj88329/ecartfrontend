@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useMemo} from 'react';
 import { useSelector} from 'react-redux';
 import GalleryImages from './GalleryImages';
 import { Card, Button } from 'react-bootstrap';
@@ -30,46 +30,56 @@ const Cart = () => {
 
 
 
-     const increaseQuantity = async(it)=>{
+     const increaseQuantity = ( (it , id)=>{
 
           let updatedProduct = {
             ...it,
             price : (it.price/(it.quantity))*(it.quantity+1),
             quantity: it.quantity + 1,
           }
-           try {
-            // Make POST request using Axios
-            const response = await axios.put(`${REACT_APP_API_URL}/api/products/${it._id}`, updatedProduct, {headers});
+       
+              const updatedCartData = cartData.map((product, index) => 
+                index === id ? updatedProduct : product
+              );
 
-            const resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
-            setCartData(resp.data);
-            console.log('res', response.data.quantity);
-          }catch(err){
-                   console.log(err)
-            }
-     }
+              // Set the updated cart data to the state
+              setCartData(updatedCartData);
+           
+
+     })
 
 
-     const decreaseQuantity = async(it)=>{
-      console.log('itemqun' , it);
+     const decreaseQuantity = async(it, id)=>{
+  
+
+      if(it.quantity <= 1) return;
 
       let updatedProduct = {
         ...it,
         price : (it.price/(it.quantity))*(it.quantity-1),
         quantity: it.quantity - 1,
       }
+       
 
-     if(updatedProduct.quantity === 0) return;
-      try {
-       // Make POST request using Axios
-       const response = await axios.put(`${REACT_APP_API_URL}/api/products/${it._id}`, updatedProduct, {headers});
 
-       const resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
-       setCartData(resp.data);
+     
+    //   try {
+    //    // Make POST request using Axios
+    //    const response = await axios.put(`${REACT_APP_API_URL}/api/products/${it._id}`, updatedProduct, {headers});
+
+    //    const resp = await axios.get(`${REACT_APP_API_URL}/api/products/`, { headers });
+    //    setCartData(resp.data);
       
-     }catch(err){
-              console.log(err)
-       }
+    //  }catch(err){
+    //           console.log(err)
+    //    }
+  
+    const updatedCartData = cartData.map((product, index) => 
+      index === id ? updatedProduct : product
+    );
+
+    // Set the updated cart data to the state
+    setCartData(updatedCartData);
      
 }
 
@@ -180,8 +190,8 @@ const Cart = () => {
       <Card.Body style={{backgroundColor:'yellow'}}>
         <Card.Title style={{backgroundColor:'', color:'red'}}>{`${it.name}`}</Card.Title>
         <Card.Title style={{backgroundColor:'',color:'red'}}>Price : ${`${it.price}`}</Card.Title>
-        <Card.Title style={{backgroundColor:'',color:'red'}}> Qty:  <Button style={{height:'40px', width: '40px'}} onClick={(e)=>increaseQuantity(it)}>+</Button>{`${it.quantity}`}
-        <Button style={{height:'40px', width: '40px' , color:'white'}} onClick={(e)=>decreaseQuantity(it)}>-</Button></Card.Title>
+        <Card.Title style={{backgroundColor:'',color:'red'}}> Qty:  <Button style={{height:'40px', width: '40px'}} onClick={(e)=>increaseQuantity(it, id)}>+</Button>{`${it.quantity}`}
+        <Button style={{height:'40px', width: '40px' , color:'white'}} onClick={(e)=>decreaseQuantity(it,id)}>-</Button></Card.Title>
        { 
         (!buyProd[it])?<>
        <Button variant="primary" style={{ backgroundColor:'green'}} onClick={()=>buyProduct(it)}>Buy Now</Button></>

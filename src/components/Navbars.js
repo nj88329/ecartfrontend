@@ -69,7 +69,7 @@ const Navbars = () => {
   return (
     <Navbar className="bg-body-tertiary justify-content-between" >
     
-      <Form inline>
+      {/* <Form inline>
       
         <Row>
           <Col xs="auto" style={{display:"flex"}}>
@@ -85,7 +85,7 @@ const Navbars = () => {
           </Col>
         </Row>
      
-      </Form>
+      </Form> */}
       <div style={{display:"flex" , gap:"20px"}}>
       
       {

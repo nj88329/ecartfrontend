@@ -5,7 +5,7 @@ import { Box, Image } from '@chakra-ui/react';
 
 const GalleryImages = ({ images , name}) => {
     
-  
+  console.log('gallerrieed')
     let len = images?.length;
     const [isHovered, setIsHovered] = useState(false);
   return (
